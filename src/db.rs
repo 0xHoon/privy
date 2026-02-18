@@ -1,10 +1,10 @@
 use age::secrecy::{ExposeSecret, SecretString};
 use anyhow::{Result, anyhow};
 use log::{LevelFilter, debug, error};
-use sqlx::ConnectOptions;
 use sqlx::SqliteConnection;
 use sqlx::migrate;
 use sqlx::sqlite::{SqliteConnectOptions, SqliteJournalMode};
+use sqlx::{ConnectOptions, Error};
 use std::fs::metadata;
 use std::path::Path;
 use std::str::FromStr;
@@ -15,13 +15,28 @@ pub async fn connect_or_create_encrypted_database(
 ) -> Result<SqliteConnection> {
     let os_string = &database_path.to_string_lossy().to_string();
 
-    let mut conn = SqliteConnectOptions::from_str(os_string)?
+    let result = SqliteConnectOptions::from_str(os_string)?
         .pragma("key", password.expose_secret().to_string())
         .journal_mode(SqliteJournalMode::Delete)
         .log_statements(LevelFilter::Trace)
         .create_if_missing(true)
         .connect()
-        .await?;
+        .await;
+
+    let mut conn = match result {
+        Ok(conn) => Ok(conn),
+        Err(Error::Database(error)) => {
+            if let Some(code) = error.code()
+                && code == "26"
+            {
+                Err(anyhow!("Unauthorized"))
+            } else {
+                Err(anyhow!("Unexpected database error: {}", error))
+            }
+        }
+        Err(err) => Err(err.into()),
+    }?;
+
     debug!("Connected to db at {}", database_path.display());
 
     if !database_path.is_file() || !metadata(database_path).is_ok() {
