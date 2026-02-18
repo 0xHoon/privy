@@ -21,10 +21,9 @@ age = "0.11.2"
 rpassword = "7.4.0"
 tokio = { version = "1.49.0", features = ["rt", "rt-multi-thread", "macros"] }
 sqlx = { version = "0.8.6", features = ["runtime-tokio-rustls", "macros", "sqlite", "migrate", "chrono"] }
-libsqlite3-sys = { version = "0.30.1", features = ["bundled-sqlcipher"] }
+libsqlite3-sys = { version = "0.30.1", features = ["bundled-sqlcipher-vendored-openssl"] }
 log = "0.4.29"
 env_logger = "0.11.9"
-anstyle = "1.0.13"
 
 # Read the optimization guideline for more details: https://ratatui.rs/recipes/apps/release-your-app/#optimizations
 [profile.release]
