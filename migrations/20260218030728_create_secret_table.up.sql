@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS secret (
+    name  TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    description TEXT,
+    frozen BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    expires_at DATETIME,
+    deleted_at DATETIME
+);
