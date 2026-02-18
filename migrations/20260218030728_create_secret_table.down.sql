@@ -1,0 +1,2 @@
+-- No-op; this is seeding the initial database,
+-- so we don't have to rollback here
