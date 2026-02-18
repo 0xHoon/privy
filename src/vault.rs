@@ -5,7 +5,7 @@ use age::secrecy::{ExposeSecret, SecretString};
 use anyhow::{Result, anyhow};
 use arboard::Clipboard;
 use chrono::{DateTime, Utc};
-use log::{debug, info};
+use log::debug;
 use sqlx::{Error, Row, SqliteConnection, query};
 use std::env;
 use std::path::PathBuf;
@@ -36,7 +36,7 @@ impl Vault {
         value: &SecretString,
         description: Option<&str>,
         frozen: bool,
-        expires_at: Option<DateTime<Utc>>,
+        _expires_at: Option<DateTime<Utc>>,
     ) -> Result<()> {
         let result = // language=sqlite
             query("INSERT INTO secret (name, value, description, frozen) VALUES (?, ?, ?, ?)")
@@ -133,7 +133,7 @@ impl Vault {
     }
 
     /// Uploads the secret to a supported remote secret store
-    pub async fn upload_secret(vault: &str, name: &str, backend: &str) {
+    pub async fn upload_secret(_vault: &str, _name: &str, _backend: &str) {
         todo!("Damn this is tough");
     }
 }

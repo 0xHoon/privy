@@ -7,7 +7,7 @@ fn display_datetime(p: &DateTime<Utc>) -> String {
     p.to_string()
 }
 
-fn display_secret(p: &SecretString) -> String {
+fn display_secret(_p: &SecretString) -> String {
     "<redacted>".to_string()
 }
 
@@ -59,9 +59,5 @@ impl Secret {
             updated_at,
             expires_at,
         }
-    }
-
-    pub fn reveal(&self) -> SecretString {
-        self.value.clone()
     }
 }

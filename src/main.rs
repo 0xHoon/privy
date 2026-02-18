@@ -14,8 +14,6 @@ use anyhow::Result;
 use chrono::{DateTime, Utc};
 use clap::Subcommand;
 use clap::{Parser, ValueEnum};
-use color_eyre::owo_colors::OwoColorize;
-use crossterm::style::Stylize;
 use tabled::Table;
 use tabled::settings::Style;
 

@@ -4,7 +4,7 @@ use log::{LevelFilter, debug, error};
 use sqlx::ConnectOptions;
 use sqlx::SqliteConnection;
 use sqlx::migrate;
-use sqlx::sqlite::{SqliteConnectOptions, SqliteJournalMode, SqliteSynchronous};
+use sqlx::sqlite::{SqliteConnectOptions, SqliteJournalMode};
 use std::fs::metadata;
 use std::path::Path;
 use std::str::FromStr;
