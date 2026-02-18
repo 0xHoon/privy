@@ -46,6 +46,9 @@ enum OutputFormat {
 #[derive(Subcommand, Debug)]
 enum Commands {
     /// Create a new secret
+    ///
+    /// Stores the encrypted value in the local vault. Optional flags let you
+    /// set a description, mark as frozen (immutable), and attach an expiry.
     Create {
         /// The (unique) name of the secret.
         name: String,
@@ -69,24 +72,42 @@ enum Commands {
         format: OutputFormat,
     },
 
-    /// Get a secret (masked)
+    /// Describe a single secret
+    ///
+    /// Shows details about the specified secret, such as description,
+    /// creation/update timestamps, expiry, and whether it's frozen. The secret
+    /// value is intentionally redacted. For the actual value, use `grab` to copy
+    /// it to the clipboard or `reveal` to print it.
+    ///
+    /// Output format can be selected via `--format` and supports `json`, `yaml`,
+    /// and `table`.
     Describe {
-        /// Name of the secret
+        /// Name of the secret to describe
         name: String,
 
         #[arg(short, long, value_enum, default_value_t = OutputFormat::Json)]
+        /// Output format (json|yaml|table)
         format: OutputFormat,
     },
 
-    /// Copy a secret to clipboard
+    /// Copy a secret's value to the system clipboard
+    ///
+    /// Decrypts the secret and pushes it onto your system clipboard (if supported)
+    /// for pasting into other applications. The value is never printed to stdout.
+    /// Be aware that clipboard contents may persist and be accessible to other
+    /// apps/users.
     Grab {
-        /// Name of the secret
+        /// Name of the secret to copy
         name: String,
     },
 
-    /// Reveal a secret (dangerous)
+    /// Print a secret's value as plaintext to stdout
+    ///
+    /// Decrypts the secret and writes the value to standard output. This is
+    /// convenient for scripting but risky on shared machines or when shells and
+    /// CI systems log command output. Prefer `grab` when possible.
     Reveal {
-        /// Name of the secret
+        /// Name of the secret to reveal
         name: String,
     },
 }
@@ -99,7 +120,7 @@ async fn main() -> Result<()> {
 
     let mut vault = Vault::init(None).await?;
 
-    let result = match args.command {
+    match args.command {
         Commands::Create {
             name,
             description,
