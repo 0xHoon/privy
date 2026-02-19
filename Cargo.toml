@@ -1,5 +1,5 @@
 [package]
-name = "privy"
+name = "secretly"
 version = "0.1.0"
 description = "A secrets manager"
 authors = ["0xHoon <maxineelington@gmail.com>"]

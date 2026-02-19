@@ -17,15 +17,15 @@ use clap::{Parser, ValueEnum};
 use tabled::Table;
 use tabled::settings::Style;
 
-/// Privy - a secrets manager for linux users
+/// Secretly - a secrets manager for linux users
 ///
-/// privy create my-secret
-/// privy list
-/// privy get my-secret
-/// privy grab my-secret
-/// privy reveal my-secret
+/// secretly create my-secret
+/// secretly list
+/// secretly get my-secret
+/// secretly grab my-secret
+/// secretly reveal my-secret
 #[derive(Parser, Debug)]
-#[command(name = "privy")]
+#[command(name = "secretly")]
 #[command(about = BANNER, long_about = BANNER)]
 #[clap(styles = CARGO_STYLING)]
 struct Cli {

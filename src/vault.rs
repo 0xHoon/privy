@@ -18,11 +18,11 @@ impl Vault {
     /// Creates a vault at the specified directory, and run any pending migrations.
     pub async fn init(path: Option<PathBuf>) -> Result<Self> {
         let vault_path = path
-            .or_else(|| env::home_dir().map(|h| h.join(".privy.db")))
+            .or_else(|| env::home_dir().map(|h| h.join(".secretly.db")))
             .ok_or_else(|| anyhow!("Could not resolve home directory"))?;
         let conn = connect_or_create_encrypted_database(
             &vault_path,
-            get_or_prompt_secret("PRIVY_VAULT_PASSWORD", "Enter vault password > ")?,
+            get_or_prompt_secret("SECRETLY_VAULT_PASSWORD", "Enter vault password > ")?,
         )
         .await?;
         debug!("Initialized vault at {}", vault_path.display());

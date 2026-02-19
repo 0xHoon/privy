@@ -1,13 +1,13 @@
 <div align="center">
-  <img src="assets/privy.png" alt="Privy logo" height="160" />
+  <img src="assets/secretly.png" alt="Secretly logo" height="160" />
 
-  <h3>Privy</h3>
+  <h3>Secretly</h3>
   <p>A tiny local secrets manager</p>
 </div>
 
 ---
 
-Privy is a small, fast, local-first secrets manager. 
+Secretly is a small, fast, local-first secrets manager. 
 
 It stores your secrets in an encrypted database on your machine and gives you a 
 simple CLI to create, list, describe, copy, and reveal secrets.
@@ -18,7 +18,7 @@ simple CLI to create, list, describe, copy, and reveal secrets.
 
 ## Overview
 
-<img src="assets/privy-terminal.png" alt="screenshot of privy in the terminal">
+<img src="assets/secretly-terminal.png" alt="screenshot of secretly in the terminal">
 
 ## Quick start
 
@@ -36,49 +36,49 @@ simple CLI to create, list, describe, copy, and reveal secrets.
 
 ### 2. Initialize vault and create a secret
 
-The first command will create an encrypted database at `~/.privy.db` and prompt for 
-a vault password (unless `PRIVY_VAULT_PASSWORD` is set).
+The first command will create an encrypted database at `~/.secretly.db` and prompt for 
+a vault password (unless `SECRETLY_VAULT_PASSWORD` is set).
 
 ```bash
 # Create a secret named "api-key" (you will be prompted for its value)
-privy create api-key -d "Key for Acme API"
+secretly create api-key -d "Key for Acme API"
 ```
 
 ### 3. Use your secret
 
 ```bash
 # List secrets (defaults to JSON)
-privy list
+secretly list
 
 # List as a pretty table
-privy list --format table
+secretly list --format table
 
 # Show metadata (never the value) for a single secret
-privy describe api-key --format yaml
+secretly describe api-key --format yaml
 
 # Copy the secret value to your clipboard
-privy grab api-key
+secretly grab api-key
 
 # Reveal the secret value to stdout (dangerous; will print in your shell history/logs)
-privy reveal api-key
+secretly reveal api-key
 ```
 
 ## Configuration
 
 - Vault password
-  - Environment variable: `PRIVY_VAULT_PASSWORD`
-  - If this isn't set, `privy` will prompt you for it: `Enter vault password > `
+  - Environment variable: `SECRETLY_VAULT_PASSWORD`
+  - If this isn't set, `secretly` will prompt you for it: `Enter vault password > `
   - If you forget this password, your data cannot be recovered. Back it up on a piece of paper or something.
 
 - Storage location
-  - Default path: `~/.privy.db`
+  - Default path: `~/.secretly.db`
   - This is an encrypted SQLite database using SQLCipher.
 
 - Logging
   - Uses `env_logger`. To see verbose logs, set e.g. `RUST_LOG=debug` before running commands.
 
 > [!IMPORTANT]
-> `PRIVY_VAULT_PASSWORD` being set as an env variable compromises security for convenience.
+> `SECRETLY_VAULT_PASSWORD` being set as an env variable compromises security for convenience.
 > Work is underway to use an alternative mechanism; ideally no passwords involved + the same level of security.
 
 ## On Security
@@ -90,9 +90,9 @@ privy reveal api-key
 
 ## Clipboard support
 
-Privy uses the `arboard` crate for cross-platform clipboard access. 
+Secretly uses the `arboard` crate for cross-platform clipboard access. 
 On some Linux environments (headless servers, minimal containers), a system clipboard may not be available. 
-If you see errors when using `privy grab`, ensure you are in a graphical session or install/configure the necessary 
+If you see errors when using `secretly grab`, ensure you are in a graphical session or install/configure the necessary 
 clipboard utilities for your environment.
 
 ## License
